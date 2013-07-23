@@ -1,0 +1,48 @@
+<div class="page_body">
+
+  <%- model_class = Post -%>
+  <hr />
+    <ul class="pager">
+      <% if @post.id == @first.id %>
+        <li class="disabled"><%= link_to 'Previous', "#" %></li>
+      <% else %>
+        <li><%= link_to 'Previous', post_path(@post.id - 1) %></li>
+      <% end %>
+      <% if @post.id == @last.id %>
+        <li class="disabled"><%= link_to 'Next', "#" %></li>
+      <% else %>
+        <li><%= link_to 'Next', post_path(@post.id + 1) %></li>
+      <% end %>
+    </ul>
+  <hr />
+  <div class="header">
+    <h2><%= @post.title %></h2>
+  </div>
+
+  <div class="cartoon_body">
+    <% if @post.size_option? %>
+      <%= image_tag @post.cartoon.url(:default), :id => "cartoon" %>
+    <% else %>
+      <%= image_tag @post.cartoon.url %>
+    <% end %>
+  </div>
+
+  <div class="description">
+    <%= simple_format @post.description %>
+  </div>
+
+
+
+  <div class="form-actions">
+    <%= link_to t('.back', :default => t("helpers.links.back")),
+                posts_path, :class => 'btn'  %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_post_path(@post), :class => 'btn' %>
+    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                post_path(@post),
+                :method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                :class => 'btn btn-danger' %>
+  </div>
+
+</div>
